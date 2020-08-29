@@ -9,14 +9,12 @@
 function ConvertHandler() {
   
   this.getNum = function(input) {
-    var result;
-    
+    var result = input.match(/^(([0-9]+(\.[0-9]+))|\d+)/)[0];
     return result;
   };
   
   this.getUnit = function(input) {
-    var result;
-    
+    var result = input.match(/[a-zA-Z\/]+$/);    
     return result;
   };
   
