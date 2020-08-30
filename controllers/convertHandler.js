@@ -9,7 +9,17 @@
 function ConvertHandler() {
   
   this.getNum = function(input) {
-    var result = input.match(/^(([0-9]+(\.[0-9]+)?(\/[0-9]+)?)|\d+)/)[0];
+    
+    var result = input.match(/^(([0-9]+(\.[0-9]+)?(\/[0-9]+)?)|\d+)/);
+    
+    if(typeof result !== 'string'){
+      result = result[0];
+    }else if(null === input.match(/^(([0-9]+(\.[0-9]+)?(\/[0-9]+)?)|\d+)/)){
+      result = 1;
+    }else{
+      result = 'invalid number';
+    }
+
     return result;
   };
   
@@ -37,14 +47,24 @@ function ConvertHandler() {
 
   this.spellOutUnit = function(unit) {
     var result;
-    
+
+    switch(unit.toLowerCase().trim()){
+      case 'mi': result = 'miles'; break;
+      case 'km': result = 'kilometres'; break;
+      case 'lbs': result = 'pound'; break;
+      case 'kg': result = 'kilogram'; break;
+      case 'gal': result = 'gallons'; break;
+      case 'l': result = 'litres'; break;
+    }
+
     return result;
   };
   
-  this.convert = function(initNum, initUnit) {
+  this.convert = function(initNumber, initUnit) {
     const galToL = 3.78541;
     const lbsToKg = 0.453592;
     const miToKm = 1.60934;
+    const initNum = eval(initNumber);
     var result;
 
     switch(initUnit.toLowerCase()){
@@ -68,12 +88,20 @@ function ConvertHandler() {
    	break;
     }
     
-    return result;
+    return result.toFixed(5);
   };
   
   this.getString = function(initNum, initUnit, returnNum, returnUnit) {
-    var result = {initNum, initUnit, returnNum, returnUnit};
-    
+    var fullString = initNum + ' ' + this.spellOutUnit(initUnit) + ' converts to '+ returnNum + ' ' + this.spellOutUnit(returnUnit);
+
+    var result = {
+      initNum, 
+      initUnit, 
+      returnNum, 
+      returnUnit,
+      'string': fullString
+    };
+
     return result;
   };
   
