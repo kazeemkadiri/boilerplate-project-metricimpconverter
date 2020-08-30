@@ -9,7 +9,7 @@
 function ConvertHandler() {
   
   this.getNum = function(input) {
-    var result = input.match(/^(([0-9]+(\.[0-9]+))|([0-9]+\/[0-9]+)|\d+)/)[0];
+    var result = input.match(/^(([0-9]+(\.[0-9]+)?(\/[0-9]+)?)|\d+)/)[0];
     return result;
   };
   
@@ -45,7 +45,7 @@ function ConvertHandler() {
     const miToKm = 1.60934;
     var result;
 
-    switch(initUnit){
+    switch(initUnit.toLowerCase()){
       case 'gal':
         result = initNum * galToL;
         break;
@@ -55,7 +55,15 @@ function ConvertHandler() {
       case 'lbs':
         result = initNum * lbsToKg;
         break;
-
+      case 'l':
+        result = initNum / galToL;
+	break;
+      case 'km':
+	result = initNum / miToKm;
+	break;
+      case 'kg':
+	result = initNum / lbsToKg;
+   	break;
     }
     
     return result;
