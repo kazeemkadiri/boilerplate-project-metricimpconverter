@@ -15,6 +15,8 @@ function ConvertHandler() {
   
   this.getUnit = function(input) {
     var result = input.match(/[a-zA-Z\/]+$/)[0];    
+    var unitsArr = ['gal','mi','lbs','kg','km','l'];
+    result = unitsArr.indexOf(result) === -1 ? 'invalid unit': result;
     return result;
   };
   
